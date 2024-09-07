@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<body>
+ 
+<canvas id="myCanvas" width="800" height="800" style="border:1px solid #000000;"></canvas></br>
+ 
+<button onclick="changeColor('red')">红色</button>
+<button onclick="changeColor('blue')">蓝色</button>
+<button onclick="changeColor('green')">绿色</button>
+<button onclick="changeColor('purple')">紫色</button>
+<button onclick="changeColor('black')">黑色</button>
+<button onclick="changeColor('white')">白色</button>
+
+
+<script>
+var canvas = document.getElementById('myCanvas');
+var ctx = canvas.getContext('2d');
+var color = 'black';
+ 
+function changeColor(newColor) {
+    color = newColor;
+}
+ 
+canvas.onmousedown = function(e) {
+    ctx.beginPath();
+    ctx.moveTo(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop);
+ 
+    canvas.onmousemove = function(e) {
+        ctx.lineTo(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    };
+};
+ 
+canvas.onmouseup = function() {
+    canvas.onmousemove = null;
+};
+ 
+function downloadCanvas() {
+    var link = document.createElement('a');
+    link.download = 'drawing.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+}
+ 
+
+
+</script>
+ 
+<button onclick="downloadCanvas()">保存到桌面</button>
+ 
+</body>
+</html>
